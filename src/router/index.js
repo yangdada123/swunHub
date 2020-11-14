@@ -5,16 +5,12 @@ import AppIndex from "@/components/home/AppIndex"
 import home from '@/components/home'
 import repository from '@/components/repositories/repository'
 import login from '@/components/login'
+import repositories from '@/components/repositories/repositories'
 Vue.use(Router)
 
 export default new Router({
   mode:'history',
   routes: [
-    {
-      path:'/',
-      name:'index',
-      component:AppIndex
-    },
     {
       path:'/home',
       name:'home',
@@ -29,16 +25,26 @@ export default new Router({
         {
           path:'/home/repository',
           name:'repository',
-          component:repository
+          component:repository,
+          meta:{
+            requireAuth: true
+          }
+        },
+        {
+          path:'/home/repositories',
+          name:'repositories',
+          component:repositories
         }
-
       ]
     },
     {
       path:'/login',
       name:'login',
-      component: login
-    }
+      component: login,
+      meta:{
+        requireAuth: false
+      }
+    },
 
   ]
 })

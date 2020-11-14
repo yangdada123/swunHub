@@ -16,13 +16,12 @@
         data(){
           return {
             branches:['master','dev'],
-            curBranch:''
+            curBranch:'master'
           }
         },
       methods:{
         handleChange(){
-          this.$axios.get('/branches?branch='+this.curBranch)
-            .catch(err => {err})
+          this.$emit("updateBranch",this.curBranch)
         }
       }
     }

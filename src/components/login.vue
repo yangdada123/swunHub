@@ -63,7 +63,6 @@
             password: this.loginForm.password
           })
           .then(successResponse => {
-
             if (successResponse.data.code === 200) {
               this.$store.commit('login',this.loginForm)
               var path = this.$route.query.redirect
