@@ -6,6 +6,7 @@ import home from '@/components/home'
 import repository from '@/components/repositories/repository'
 import login from '@/components/login'
 import repositories from '@/components/repositories/repositories'
+import regist from "../components/regist";
 Vue.use(Router)
 
 export default new Router({
@@ -45,6 +46,11 @@ export default new Router({
         requireAuth: false
       }
     },
+    {
+      path:'/regist',
+      name:'regist',
+      component: regist
+    }
 
   ]
 })

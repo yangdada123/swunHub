@@ -28,8 +28,7 @@
 <template>
   <div class="body">
     <el-form class="login-container" :rules="rules" :model="loginForm">
-
-      <h3 class="login-tittle">系统登录</h3>
+      <h3 class="login-tittle">系统注册</h3>
 
       <el-form-item label="用户名" prop="username">
         <el-input type="text" placeholder="请输入用户名" v-model="loginForm.username"/>
@@ -39,9 +38,7 @@
       </el-form-item>
 
       <el-form-item style="width: 100%">
-        <el-button v-on:click="login"    style="width: 100%;background: #505458;border: none " type="primary" round>登录</el-button>
-        <el-button v-on:click="toRegist" style="width: 100%;background: #505458;border: none " type="primary" round>注册</el-button>
-
+        <el-button v-on:click="regist" style="width: 100%;background: #505458;border: none " type="primary" round>注册</el-button>
       </el-form-item>
     </el-form>
   </Div>
@@ -50,7 +47,7 @@
 <script>
 
   export default {
-    name: 'Login',
+    name: 'Regist',
     data () {
       return {
         loginForm: {
@@ -69,17 +66,18 @@
       }
     },
     methods: {
-      login () {
+      regist () {
         this.$axios
-          .post('/login', {
+          .post('/regist', {
             username: this.loginForm.username,
             password: this.loginForm.password
           })
           .then(successResponse => {
             if (successResponse.data === 200) {
               this.$store.commit('login',this.loginForm)
+              this.successMessage();
               var path = this.$route.query.redirect
-              this.$router.replace({path: path === undefined ? '/home/repositories' : path})
+              this.$router.replace('/login');
             }
             else{
               this.errorMessage();
@@ -88,16 +86,18 @@
           .catch(failResponse => {
           })
       },
-
-      toRegist() {
-        this.$router.replace('/regist');
-      },
-
-      errorMessage() {
+      errorMessage(){
         this.$message({
           showClose: true,
-          message: '账号或密码错误，请检查！',
+          message: '用户名已经存在，请重新输入！',
           type: 'error'
+        });
+      },
+      successMessage() {
+        this.$message({
+          showClose: true,
+          message: '注册成功！现在可以登录了',
+          type: 'success'
         });
       }
     }
